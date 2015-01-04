@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  biz_link: MyString
+  business_id: 
+  created_at: MyString
+  datetime: MyString
+  updated_at: MyString
+  datetime: MyString
+
+two:
+  biz_link: MyString
+  business_id: 
+  created_at: MyString
+  datetime: MyString
+  updated_at: MyString
+  datetime: MyString

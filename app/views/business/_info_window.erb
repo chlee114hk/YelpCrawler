@@ -1,0 +1,39 @@
+<div>
+	<b class="name"><%= business.name %></b>
+	<% if business.category %>
+		<div class="category">
+			<% cat = business.category.map(&:name) %>
+			<%= cat.join(', ') %>
+		</div>
+	<% end %>
+	<div class="address"> 
+		<%= business.full_street_address %>
+	</div>
+	<div class=""postal_code">
+		<%= business.postal_code %>
+	</div>
+	<br>
+	<% if business.website %>
+		<div class="website">
+			<a href="http://<%= business.website %>"><%= business.website %></a>
+		</div>
+	<% end %>
+	<% if business.phone_number %>
+		<div class="phone"><%= business.phone_number %></div>
+	<% end %>
+	<br>
+	<% if business.price %>
+		<div class="price">Price: <%= '$' * business.price %></div>
+	<% end %>
+	<% if business.rating %>
+		<div class="rating">Rating: <%= business.rating %>
+			<span class="star">
+				<%= raw(
+						("&#9733;" * business.rating.to_i) +
+						("&#9734;" * (5 - business.rating.to_i))
+					)
+				%>
+			</star>
+		</div>
+	<% end %>
+</div>
