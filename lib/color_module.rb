@@ -1,4 +1,8 @@
+require 'rubygems'
+require 'RMagick'
+
 module ColorModule
+	include Magick
 	def parse_color(color)
 		m_color = Magick::Pixel.from_color(color)
 		[m_color.red, m_color.green, m_color.blue]
