@@ -18,7 +18,7 @@ class Link < ActiveRecord::Base
 		html = YelpCrawler.get_content(business_url)
 		parsed = Nokogiri::HTML(html)
 
-		self.class.detect_recaptcha(html)
+		self.class.detect_recaptcha(parsed)
 
 		name = parsed.css('.biz-page-title').text.strip
 		website = parsed.css('.biz-website a').text.strip
