@@ -2,11 +2,11 @@ class Category < ActiveRecord::Base
  	has_and_belongs_to_many :business
 
   attr_accessible :name
-	
+
 	def color
 		Category.color_table[id - 1]
 	end
-	
+
 	class << self
 		include ColorModule
 
@@ -14,7 +14,7 @@ class Category < ActiveRecord::Base
 			generate_color_table unless @table
 			@table
 		end
-	
+
 		def generate_color_table
 			colors = []
 			colors[0] = "#FF0000"
@@ -30,12 +30,12 @@ class Category < ActiveRecord::Base
 						:l => (i / 36) % 2 == 0 ?
 						  (
 							  (c[2] + 16 * (i / 36) > 255) ?
-							  (c[2] + 16 * (i / 36) - 255) :
+							  255 :
 							  (c[2] + 16 * (i / 36))
 							) :
 						  (
 							  (c[2] - 16 * (i / 36) < 0) ?
-							  (c[2] - 16 * (i / 36) + 255) :
+							  0 :
 							  (c[2] - 16 * (i / 36))
 							)
 					}
