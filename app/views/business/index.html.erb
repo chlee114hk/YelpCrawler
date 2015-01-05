@@ -11,7 +11,7 @@
 		<th>Number of stores</th>
 	</tr>
 
-	<% @businesses.group(:state).where.not(state: nil).count.each do |state, count| %>
+	<% @businesses.group(:state).where.not(state: nil).where("state <> ''").count.each do |state, count| %>
 		<tr>
 			<td><%= state %></td>
 			<td><%= count %></td>
@@ -25,7 +25,7 @@
 		<th>Number of stores</th>
 	</tr>
 
-	<% @businesses.group(:postal_code).where.not(postal_code: nil).count.each do |postal_code, count| %>
+	<% @businesses.group(:postal_code).where.not(postal_code: nil).where("postal_code <> ''").count.each do |postal_code, count| %>
 		<tr>
 			<td><%= postal_code %></td>
 			<td><%= count %></td>
