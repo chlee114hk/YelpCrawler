@@ -7,6 +7,6 @@ class CreateBusinessesCategories < ActiveRecord::Migration
       t.timestamps
     end
 
-		add_index :businesses_categories, [:category_id, :business_id], :unique => true
-	end
+    add_index :businesses_categories, [:category_id, :business_id], :unique => true
+  end
 end

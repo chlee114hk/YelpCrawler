@@ -25,14 +25,8 @@ ActiveRecord::Schema.define(version: 20141227082237) do
     t.string   "country"
     t.string   "postal_code"
     t.string   "zipcode"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "categories", force: true do |t|
-    t.string   "name"
+    t.float    "latitude",       limit: 24
+    t.float    "longitude",      limit: 24
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -47,6 +41,12 @@ ActiveRecord::Schema.define(version: 20141227082237) do
   add_index "businesses_categories", ["business_id"], name: "index_businesses_categories_on_business_id", using: :btree
   add_index "businesses_categories", ["category_id", "business_id"], name: "index_businesses_categories_on_category_id_and_business_id", unique: true, using: :btree
   add_index "businesses_categories", ["category_id"], name: "index_businesses_categories_on_category_id", using: :btree
+
+  create_table "categories", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "links", force: true do |t|
     t.string   "biz_link"
