@@ -1,4 +1,6 @@
 module Geometry
+	R = 6371
+
 	def destination_point(longitude, latitude, bearing, distance)
 		rad_bearing = bearing / 180.0 * Math::PI
 		longitude = longitude / 180.0 * Math::PI

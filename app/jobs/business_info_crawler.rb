@@ -1,5 +1,5 @@
-#require "yelp_crawler_module"
 require "resque/errors"
+require "errors"
 
 class BusinessInfoCrawler
 	include Resque::Plugins::UniqueJob
@@ -7,7 +7,7 @@ class BusinessInfoCrawler
 
 	@queue = :business_info_crawler
 	@retry_delay = 120
-	@sleep_after_requeue = 60
+	#@sleep_after_requeue = 60
 	@retry_delay_multiplicand_min = 1.0
 	@retry_delay_multiplicand_max = 2.0
 
@@ -17,7 +17,7 @@ class BusinessInfoCrawler
 			link.populate_business
 		rescue Resque::TermException
 			Rails.logger.error "BusinessInfoCrawler job cleaned up!"
-		rescue BlockedByRecaptcha, MissingExpectedContent => e
+		rescue YelpCrawlerModule::BlockedByRecaptcha, YelpCrawlerModule::MissingExpectedContent => e
 			Rails.logger.error e.message.red
 		end
 	end

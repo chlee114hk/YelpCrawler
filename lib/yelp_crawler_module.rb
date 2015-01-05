@@ -2,13 +2,12 @@ require 'geometry'
 module YelpCrawlerModule
 	class YelpCrawler
 		US_CONG_DIST_DATA = Rails.root.join('data','cgd112p020.json')
-		R = 6371
 
 		class << self
 			include Geometry
 
 			def get_content(url)
-				puts "Fetching data from page #{url}"
+				Rails.logger.info "Fetching data from page #{url}".yellow
 				cookie_file = File.join(Rails.root, "config", "cookie.dat")
 				cookies = WebAgent::CookieManager.new cookie_file
 

@@ -1,4 +1,3 @@
-#require "yelp_crawler_module"
 require "resque/errors"
 
 class AreaCrawler

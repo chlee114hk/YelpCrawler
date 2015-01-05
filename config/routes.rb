@@ -1,5 +1,6 @@
 require 'resque/server'
 require 'resque-retry'
+require 'resque/scheduler/server'
 require 'resque-retry/server'
 
 Rails.application.routes.draw do

@@ -17,8 +17,8 @@ class Link < ActiveRecord::Base
 	def populate_business
 		html = YelpCrawler.get_content(business_url)
 		parsed = Nokogiri::HTML(html)
-		
-		detect_recaptcha(html)
+
+		self.class.detect_recaptcha(html)
 
 		name = parsed.css('.biz-page-title').text.strip
 		website = parsed.css('.biz-website a').text.strip
@@ -80,13 +80,11 @@ class Link < ActiveRecord::Base
 			parsed = Nokogiri::HTML(html)
 
 			detect_recaptcha(parsed)
-			
+
 			page_of_pages = parsed.css('.page-of-pages').text.strip.match(/^Page\s+(?<current>\d+)\s+of\s+(?<total>\d+)$/)
 			pagination = parsed.css('.pagination-results-window').text.strip.match(/^Showing\s+(?<start>\d+)-(?<end>\d+)\s+of\s+(?<total>\d+)$/)
 
-			raise MissingExpectedContent,
-				"Expected cotent missing when fetching " + page_to_fetch
-				unless page_of_pages && pagination
+			raise MissingExpectedContent,"Expected cotent missing when fetching " + page_to_fetch unless page_of_pages && pagination
 
 			populate_link(parsed)
 
@@ -140,16 +138,12 @@ class Link < ActiveRecord::Base
 			end
 			biz_links
 		end
-		
-		private
 
 		def detect_recaptcha(parsed_html)
 			recaptcha = parsed_html.css('input[name=recaptcha_response_field]')
-			
-			raise BlockedByRecaptcha, 
-				"Blocked by recaptcha! Please go to yelp page and solve the recaptcha manually." 
-				unless recaptcha.empty?
+
+			raise BlockedByRecaptcha,"Blocked by recaptcha! Please go to yelp page and solve the recaptcha manually." unless recaptcha.empty?
 		end
-		
+
 	end
 end
