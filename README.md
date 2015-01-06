@@ -58,3 +58,10 @@ You can define your boundary for crawler by running following code in rails cons
 ```
 YelpCrawler.crawl_inside_boundary(boundary, interval)
 ```
+
+## CSS
+
+You may need to run the following code in order to see proper css in development.
+```
+RAILS_ENV=development bundle exec rake assets:precompile
+```
