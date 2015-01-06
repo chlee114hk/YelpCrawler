@@ -1,0 +1,13 @@
+:concurrency: 5
+:pidfile: tmp/pids/sidekiq.pid
+test:
+  :concurrency: 25
+development:
+  :concurrency: 25
+production:
+  :concurrency: 25
+:queues:
+  - [area_crawler, 3]
+  - [business_link_finder, 7]
+  - [BusinessInfoCrawler, 5]
+  - default
