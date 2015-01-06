@@ -1,24 +1,18 @@
-require "resque/errors"
+require 'yelp_crawler_module'
 require "errors"
 
 class BusinessInfoCrawler
-	include Resque::Plugins::UniqueJob
-	extend Resque::Plugins::Retry
+	include Sidekiq::Worker
+	sidekiq_options :queue => :business_info_crawler, :backtrace => true
 
-	@queue = :business_info_crawler
-	@retry_delay = 120
-	#@sleep_after_requeue = 60
-	@retry_delay_multiplicand_min = 1.0
-	@retry_delay_multiplicand_max = 2.0
-
-	class << self
-		def perform(link_id)
-			link = Link.find_by_id(link_id)
-			link.populate_business
-		rescue Resque::TermException
-			Rails.logger.error "BusinessInfoCrawler job cleaned up!"
-		rescue YelpCrawlerModule::BlockedByRecaptcha, YelpCrawlerModule::MissingExpectedContent => e
-			Rails.logger.error e.message.red
-		end
+	def perform(link_id)
+		link = Link.find_by_id(link_id)
+		link.populate_business
+	rescue YelpCrawlerModule::MissingExpectedContent => e
+		Rails.logger.error e.message.red
+	rescue YelpCrawlerModule::BlockedByRecaptcha => e
+		Rails.logger.error e.message.red
+		# raise again for retry
+		raise YelpCrawlerModule::BlockedByRecaptcha
 	end
 end

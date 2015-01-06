@@ -95,10 +95,10 @@ class Link < ActiveRecord::Base
 			if (total_results > total_pages * range)
 				mid_long = (long1 + long2) / 2.0
 				mid_lat = (lat1 + lat2) / 2.0
-				Resque.enqueue(BusinessLinkFinder, long1, mid_lat, mid_long, lat2)
-				Resque.enqueue(BusinessLinkFinder, long1, lat1, mid_long, mid_lat)
-				Resque.enqueue(BusinessLinkFinder, mid_long, mid_lat, long2, lat2)
-				Resque.enqueue(BusinessLinkFinder, mid_long, lat1, long2, mid_lat)
+				BusinessLinkFinder.perform_async(long1, mid_lat, mid_long, lat2)
+				BusinessLinkFinder.perform_async(long1, lat1, mid_long, mid_lat)
+				BusinessLinkFinder.perform_async(mid_long, mid_lat, long2, lat2)
+				BusinessLinkFinder.perform_async(mid_long, lat1, long2, mid_lat)
 				return
 			end
 
@@ -133,7 +133,7 @@ class Link < ActiveRecord::Base
 				biz_links << biz_link
 				if !Link.find_by(biz_link: biz_link)
 					business_link = Link.create(biz_link: biz_link)
-					Resque.enqueue(BusinessInfoCrawler, business_link.id)
+					BusinessInfoCrawler.perform_async(business_link.id)
 				end
 			end
 			biz_links

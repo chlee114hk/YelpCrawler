@@ -28,7 +28,7 @@ module YelpCrawlerModule
 				hash = JSON.parse(data)
 				geo_data = hash['features'].each do |area|
 					area['geometry']['coordinates'].each do |boundary|
-						Resque.enqueue(AreaCrawler, boundary, interval.to_f)
+						AreaCrawler.perform_async(boundary, interval.to_f)
 					end
 				end
 			end
@@ -50,8 +50,8 @@ module YelpCrawlerModule
 					down = destination_point(point[0], point[1], 180.0, interval)
 					right = destination_point(point[0], point[1], -90.0, interval)
 
-					Resque.enqueue(BusinessLinkFinder, point[0], point[1], right[0], up[1])
-
+					BusinessLinkFinder.perform_async(point[0], point[1], right[0], up[1])
+puts point
 					if (!inside_boundary(up[0], up[1], visited_area) &&
 							inside_boundary(up[0], up[1], boundary))
 						unvisited.enq(up)

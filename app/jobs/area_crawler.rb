@@ -1,16 +1,9 @@
-require "resque/errors"
-
+require 'yelp_crawler_module'
 class AreaCrawler
-	include Resque::Plugins::UniqueJob
-	extend Resque::Plugins::ExponentialBackoff
+	include Sidekiq::Worker
+  sidekiq_options :queue => :area_crawler, :backtrace => true
 
-  @queue = :area_crawler
-
-	class << self
-		def perform(boundary, interval)
-			YelpCrawlerModule::YelpCrawler.crawl_inside_boundary(boundary, interval)
-		rescue Resque::TermException
-			Rails.logger.error "AreaCrawler job cleaned up!"
-		end
+	def perform(boundary, interval)
+		YelpCrawlerModule::YelpCrawler.crawl_inside_boundary(boundary, interval)
 	end
 end

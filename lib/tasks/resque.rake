@@ -53,11 +53,6 @@ namespace :resque do
 			ActiveRecord::Base.establish_connection
 			Resque.redis.client.reconnect
 		end
-		YelpCrawlerModule::YelpCrawler.start_crawl(10.0)
+		YelpCrawlerModule::YelpCrawler.start_crawl(50.0)
 	end
-end
-
-task "yelp_crawler" => [:environment, "resque:pool:setup"] do
-	YelpCrawlerModule::YelpCrawler.start_crawl(10.0)
-	Resque::Pool.run
 end
