@@ -7,7 +7,7 @@ namespace :yelp_crawler do
   end
 
   task "finish_unprocessed_links" => :environment do
-    unprocessed = Link.find_by(business_id: nil)
+    unprocessed = Link.where(business_id: nil)
     if unprocessed
       unprocessed.each do |link|
         BusinessInfoCrawler.perform_async(link.id)
