@@ -11,7 +11,7 @@ class Category < ActiveRecord::Base
 		include ColorModule
 
 		def color_table
-			generate_color_table unless @table
+			generate_color_table unless @table && @table.size >= Category.all.size
 			@table
 		end
 
