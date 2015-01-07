@@ -12,7 +12,7 @@ class Business < ActiveRecord::Base
   end
 	
 	def marker_url
-		marker_pic_url(category.first.color[1..-1]) if category
+		marker_pic_url(category.first.color[1..-1]) if category.first
 	end
 	
 	private
