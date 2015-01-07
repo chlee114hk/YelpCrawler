@@ -51,7 +51,7 @@ module YelpCrawlerModule
 					right = destination_point(point[0], point[1], -90.0, interval)
 
 					BusinessLinkFinder.perform_async(point[0], point[1], right[0], up[1])
-puts point
+
 					if (!inside_boundary(up[0], up[1], visited_area) &&
 							inside_boundary(up[0], up[1], boundary))
 						unvisited.enq(up)

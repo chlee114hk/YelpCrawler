@@ -9,5 +9,5 @@ production:
 :queues:
   - [area_crawler, 3]
   - [business_link_finder, 7]
-  - [BusinessInfoCrawler, 5]
+  - [business_info_crawler, 5]
   - default
