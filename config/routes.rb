@@ -1,16 +1,11 @@
-require 'resque/server'
-require 'resque-retry'
-require 'resque/scheduler/server'
-require 'resque-retry/server'
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-	root 'business#index'
+  root 'business#index'
 
   get 'business/index'
 
-  #mount Resque::Server.new, at: "/resque"
-	mount Sidekiq::Web => '/sidekiq'
+  mount Sidekiq::Web => '/sidekiq'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
