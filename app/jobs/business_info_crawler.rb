@@ -3,7 +3,7 @@ require "errors"
 
 class BusinessInfoCrawler
 	include Sidekiq::Worker
-	sidekiq_options :queue => :business_info_crawler, :backtrace => true
+	sidekiq_options :queue => :business_info_crawler, unique: true
 
 	def perform(link_id)
 		link = Link.find_by_id(link_id)

@@ -2,13 +2,24 @@ source 'https://rubygems.org'
 
 gem 'httpclient'
 gem 'nokogiri'
-gem 'sidekiq'
+
 gem 'coveralls'
 gem 'redis-namespace'
+gem 'sidekiq'
+gem 'sidekiq-failures'
+gem 'sidekiq-scheduler'
+gem 'sidekiq-status'
+gem 'sidekiq-unique-jobs'
+# Sidekiq web interface
 gem 'sinatra'
+gem  "slim"
+
 gem 'protected_attributes'
+
+# google map
 gem 'gmaps4rails'
 gem 'geocoder'
+
 gem 'rmagick', '2.13.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

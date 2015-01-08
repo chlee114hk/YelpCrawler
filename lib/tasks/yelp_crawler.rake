@@ -14,12 +14,13 @@ namespace :yelp_crawler do
       end
     end
   end
+
+  task :all => ['yelp_crawler:finish_unprocessed_links', 'yelp_crawler:start_crawler']
 end
 
-task :yelp_crawler => ['yelp_crawler:finish_unprocessed_links', 'yelp_crawler:start_crawler']
-
-#task "yelp_crawler" => :environment do
-#  CrawlYelp::Application.load_tasks
-#  Rake::Task['yelp_crawler:finish_unprocessed_links'].invoke
-#  Rake::Task['yelp_crawler:start_crawler'].invoke
-#end
+task "yelp_crawler" => :environment do
+  #CrawlYelp::Application.load_tasks
+  Rake::Task['yelp_crawler:all'].invoke
+  #Rake::Task['yelp_crawler:finish_unprocessed_links'].invoke
+  #Rake::Task['yelp_crawler:start_crawler'].invoke
+end

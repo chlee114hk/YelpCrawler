@@ -3,7 +3,8 @@ require "errors"
 
 class BusinessLinkFinder
 	include Sidekiq::Worker
-	sidekiq_options :queue => :business_link_finder, :backtrace => true
+	include Sidekiq::Status::Worker
+	sidekiq_options :queue => :business_link_finder, unique: true
 
 	def perform(long1, lat1, long2, lat2)
 		Link.grep_links(long1, lat1, long2, lat2)
